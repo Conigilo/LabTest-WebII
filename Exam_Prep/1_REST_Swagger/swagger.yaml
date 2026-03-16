@@ -4,7 +4,7 @@ info:
   description: API for managing a book store inventory with search and sort capabilities.
   version: 1.0.0
 servers:
-  - url: http://localhost:8000
+  - url: http://localhost:3000/api
     description: Local Server
 
 paths:

@@ -9,7 +9,8 @@ app.use(express.json());
 // 1. จำลองฐานข้อมูลแบบ Array แบบง่ายที่สุด
 let books = [
     { id: 1, title: 'Book 1' },
-    { id: 2, title: 'Book 2' }
+    { id: 2, title: 'Book 2' },
+    { id: 3, title: 'Book 3'}
 ];
 
 // 2. GET: ดึงข้อมูลทั้งหมด
@@ -27,10 +28,34 @@ app.post('/api/books', (req, res) => {
     res.status(201).json(newBook);
 });
 
+
+//4. PUT: แก้ไขข้อมูล
+app.put('/api/books/:id', (req, res) =>{
+    const id = Number(req.params.id);
+    const index = books.findIndex(books => books.id == id);
+    if(index == -1){
+        return res.status(404).json({message: "Not Found"});
+    }
+    books[index].title = req.body.title;
+    res.json(books[index]);
+})
+
+// 5. DELETE: ลบข้อมูล
+app.delete('/api/books/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const index = books.findIndex(books => books.id == id);
+    if(index == -1){
+        return res.status(404).json({message: "Not Found"});
+    }
+    books.splice(index, 1);
+    res.json({message: "Book deleted"});
+})
+
 // 4. ผูก Swagger UI ง่ายๆ (อ่านตั้งค่าจากไฟล์ swagger.yaml)
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
+    console.log("Swagger is running on http://localhost:3000/api-docs")
 });
