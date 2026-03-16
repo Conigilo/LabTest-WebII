@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// แนะนำใช้ Database เป็น SQLite เพื่อง่ายต่อการทดสอบครับ
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// สร้างตาราง Database ง่ายๆ
+model Product {
+  id        Int      @id @default(autoincrement()) // เป็น Primary Key รันอัตโนมัติ
+  name      String   // ชื่อสินค้า  
+  price     Float    // ราคาสินค้า
+  createdAt DateTime @default(now()) // วันที่สมัคร สร้างออโต้
+}

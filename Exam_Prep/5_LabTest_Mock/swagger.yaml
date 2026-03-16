@@ -1,0 +1,246 @@
+openapi: 3.0.0
+info:
+  title: Book Management API
+  description: API for managing a book store inventory with search and sort capabilities.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local Server
+
+paths:
+  /books:
+    get:
+      tags:
+        - Books
+      operationId: get-all-books
+      summary: ดึงรายการหนังสือทั้งหมด
+      description: ดึงรายการหนังสือทั้งหมด รองรับการค้นหาด้วยคีย์เวิร์ดและการจัดเรียง
+      parameters:
+        - in: query
+          name: search
+          schema:
+             type: string
+          description: ค้นหาหนังสือ
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [price, publishedYear, title]
+          description: เรียงตามราคา ปีที่พิมพ์ หรือชื่อหนังสือ
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [asc, desc]
+          description: เรียงจากน้อยไปมาก หรือมากไปน้อย
+      responses:
+        '200':
+          description: ดึงรายการหนังสือทั้งหมดสำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Book'
+    post:
+      tags:
+        - Books
+      operationId: create-new-book
+      summary: เพิ่มหนังสือใหม่
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBook'
+      responses:
+        '201':
+          description: เพิ่มหนังสือใหม่สำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                  data:
+                     $ref: '#/components/schemas/Book'
+        '400':
+          description: ข้อมูลไม่ถูกต้อง
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+  
+  /books/{id}:
+    get:
+      tags:
+        - Books
+      operationId: get-book-by-id 
+      summary: ดึงข้อมูลหนังสือตาม ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: รหัสหนังสือ
+      responses:
+        '200':
+          description: ดึงข้อมูลหนังสือสำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                     $ref: '#/components/schemas/Book'
+        '404':
+          description: ไม่พบหนังสือ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+
+    put:
+      tags:
+        - Books
+      operationId: update-book
+      summary: อัปเดตข้อมูลหนังสือ
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBook'
+      responses:
+        '200':
+          description: อัปเดตข้อมูลหนังสือสำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                  data:
+                     $ref: '#/components/schemas/Book'
+        '404':
+          description: ไม่พบหนังสือ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+
+    delete:
+      tags:
+        - Books
+      operationId: delete-book
+      summary: ลบหนังสือ
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ลบหนังสือสำเร็จ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                  data:
+                     $ref: '#/components/schemas/Book'
+        '404':
+          description: ไม่พบหนังสือ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+        publishedYear:
+          type: integer
+        genre:
+          type: string
+        price:
+          type: number
+    NewBook:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        publishedYear:
+          type: integer
+        genre:
+          type: string
+        price:
+          type: number
+      required:
+        - title
+        - author
+        - price

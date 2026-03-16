@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+// ชื่อแพ็กเกจของเรา
+package bookpackage;
+
+// สร้าง Service (เทียบกับ REST คือสร้าง Router/Endpoint)
+service BookService {
+  rpc GetBook (BookRequest) returns (BookResponse);
+  rpc GetAllBooks (Empty) returns (BookList);
+  rpc CreateBook (BookItem) returns (BookItem);
+}
+
+// กำหนด Type ของข้อมูลที่รับส่ง (เทียบกับ REST คือการกำหนด req.body / req.params)
+message Empty {}
+
+message BookRequest {
+  int32 id = 1;
+}
+
+// 1, 2, 3 ด้านหลังคือ "ลำดับ" ของตัวแปรใน Binary (ไม่ใช่ค่าเริ่มต้นนะครับ)
+message BookItem {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+}
+
+message BookResponse {
+  BookItem book = 1;
+}
+
+message BookList {
+  repeated BookItem books = 1; // repeated หมายถึง Array (จะเป็น Array ของ BookItem)
+}

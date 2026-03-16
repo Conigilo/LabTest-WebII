@@ -1,0 +1,25 @@
+{
+  "name": "5_labtest_mock",
+  "version": "1.0.0",
+  "description": "ในการสอบแบบ **Lab Test (ปฏิบัติ)** อาจารย์มักจะให้คะแนน \"ความสะอาดและการจัดระเบียบโค้ด (Clean Code & Architecture)\" ด้วย! ถ้าคุณเอาทุกอย่าง (Routes, Database, Logic) ไปยัดรวมใน `app.js` ไฟล์เดียว โอกาสโดนหักคะแนนสูงมาก",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "5.22.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "5.22.0",
+    "sqlite3": "^6.0.1"
+  }
+}

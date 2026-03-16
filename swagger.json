@@ -1,0 +1,87 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Express API",
+    "version": "1.0.0",
+    "description": "Basic Swagger documentation for Express server"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/api/books": {
+      "get": {
+        "summary": "Get all books",
+        "tags": ["Books"],
+        "responses": { "200": { "description": "Success" } }
+      },
+      "post": {
+        "summary": "Create a new book",
+        "tags": ["Books"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string", "example": "Harry Potter" },
+                  "author": { "type": "string", "example": "J.K. Rowling" },
+                  "price": { "type": "number", "example": 500 },
+                  "stock": { "type": "number", "example": 20 },
+                  "createdAt": { "type": "string", "example": "2022-01-01T00:00:00Z" },
+                  "updatedAt": { "type": "string", "example": "2022-01-01T00:00:00Z" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/books/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" }
+        }
+      ],
+      "get": {
+        "summary": "Get a book by ID",
+        "tags": ["Books"],
+        "responses": { "200": { "description": "Success" }, "404": { "description": "Not found" } }
+      },
+      "put": {
+        "summary": "Update a book",
+        "tags": ["Books"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string", "example": "Harry Potter 2" },
+                  "author": { "type": "string", "example": "J.K. Rowling" },
+                  "price": { "type": "number", "example": 600 },
+                  "stock": { "type": "number", "example": 10 }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Success" }, "500": { "description": "Error" } }
+      },
+      "delete": {
+        "summary": "Delete a book",
+        "tags": ["Books"],
+        "responses": { "200": { "description": "Success" } }
+      }
+    }
+  }
+}
