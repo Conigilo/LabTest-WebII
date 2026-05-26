@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkerLab</title>
+    <style>
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.container {
+    background-color: rgb(197, 255, 255);
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.test-area {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+span {
+    margin-bottom: 5px;
+    font-size: 22px;
+}
+
+.input {
+    margin-bottom: 10px;
+    height: 70px;
+    text-align: center;
+    font-size: x-large;
+    border: solid 0.5px;
+    border-radius: 10px;
+}
+
+.btn-no-worker {
+    margin-bottom: 10px;
+    height: 60px;
+    border: none;
+    font-size: 18px;
+    background-color: rgb(255, 129, 129);
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.btn-no-worker:hover {
+    background-color: rgb(229, 100, 100);
+    color: white;
+}
+
+.btn-worker {
+    margin-bottom: 10px;
+    height: 60px;
+    border: none;
+    font-size: 18px;
+    background-color: rgb(120, 178, 107);
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.btn-worker:hover {
+    background-color: rgb(88, 148, 75);
+    color: white;
+}
+
+.result {
+    height: 70px;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+}
+
+.animation {
+    width: 70%;
+    height: 180px;
+    border: 1px solid #ccc;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    margin: 20px auto 0 auto;
+}
+
+.ball {
+    width: 50px;
+    height: 50px;
+    background: #21c0ff;
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    left: 0%;
+    transition: left 0.5s ease-in-out;
+}
+
+.ball.active {
+    animation: bounce 2s linear infinite alternate;
+}
+
+@keyframes bounce {
+    0% { left: 0%; }
+    100% { left: calc(100% - 30px); }
+}
+
+.play, .stop {
+    position: absolute;
+    right: 10px;
+    padding: 5px 15px;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    width: 45px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.play {
+    bottom: 45px;
+    margin-bottom: 6px;
+}
+
+.stop {
+    bottom: 10px;
+}
+
+.play:hover, .stop:hover {
+    background: #ddd;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="animation">
+            <div class="ball"></div>
+            <div class="play">Play</div>
+            <div class="stop">Stop</div>
+        </div>
+
+        <div class="test-area">
+            <h2>Find Fibonacci Number</h2>
+            <span>Enter N Number:</span>
+            <input id="input" class="input">
+            
+            <button id="noWorkerBtn" class="btn-no-worker">
+                Start Find N Fibonacci with NO Worker
+            </button>
+            <button id="workerBtn" class="btn-worker">
+                Start Find N Fibonacci with Dedicated Worker
+            </button>
+
+            <span id="result">Result: </span>
+            <div id="display" class="result"></div>    
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
